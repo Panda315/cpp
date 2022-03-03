@@ -41,20 +41,19 @@ class Time
         }
 };
 
+
 class DateTime : public Date,public Time
 {
     public:
+    void datetime_checker();
+
     DateTime() : Date(),Time() {}
+
+
+
     
-    bool operator > (DateTime &temp)
-    {
-        /* if(year>=temp.year || month>=temp.month || day>=temp.day || hour>=temp.hour || min>= temp.min || sec>=temp.sec)
-            return true;
-
-        else 
-            return false;
-        */
-
+    bool operator > (DateTime &temp)    //operator overloading 
+    {                                   //checking for recent date among two date and time
        if(year>temp.year)
             return true;
         else if(year<temp.year)
@@ -103,6 +102,78 @@ class DateTime : public Date,public Time
     }
 };
 
+void DateTime::datetime_checker()
+{
+    if(sec>=60)             //Correcting seconds if required
+    {
+        do{
+            sec=sec-60;
+            min++;
+        }while(sec>60);
+    }
+        
+    if(min>=60)             //Correcting minutes if required
+    {
+        do{
+            min=min-60;
+            hour++;
+        }while(min>60);
+    }
+
+    if(hour>=24)             //Correcting hours if required
+    {
+        do{
+            hour = hour - 24;
+            day++;
+        }while(hour>24);
+    }
+
+    check_for_days:         //checking for days in months again if year is increased by the increament of months
+    if(month==1||month==3||month==5||month==7||month==8||month==10||month==12)   //correcting days if required
+    {
+        if(day>31)
+        {
+            do
+            {
+                day=day-31;
+                month++;
+            }while((day>31) && (month==1||month==3||month==5||month==7||month==8||month==10||month==12));
+        }
+    }
+
+    if(month==4||month==6||month==9||month==11)
+    {
+        if(day>30)
+        {
+            do
+            {
+                day=day-30;
+                month++;
+            }while(day>30 && (month==4||month==6||month==9||month==11));
+        }
+    }
+
+    if(month==2)
+    {
+        if(day>29)
+        {
+            do
+            {
+                day=day-29;
+                month++;
+            }while(day>29 && month==2);
+        }
+    }
+        
+    if(month>12)
+    {
+        month=month-12;
+        year++;
+        goto check_for_days;
+    }
+}
+
+
 int main()
 {
     int size;
@@ -114,6 +185,7 @@ int main()
         cout << "\nFor Data " << i+1 << ":" << endl;
         datetime[i].Date_input();
         datetime[i].Time_input();
+        datetime[i].datetime_checker();
     }
 
     for(int i=0;i<size-1;i++)               //Bubble Sorting
@@ -135,9 +207,4 @@ int main()
     {
         datetime[i].print();
     }
-    
-    
-
-
-
 }

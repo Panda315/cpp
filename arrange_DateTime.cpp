@@ -116,7 +116,7 @@ bool DateTime::datetime_checker()
         do{
             sec=sec-60;
             min++;
-        }while(sec>60);
+        }while(sec>=60);
     }
         
     if(min>=60)             //Correcting minutes if required
@@ -124,7 +124,7 @@ bool DateTime::datetime_checker()
         do{
             min=min-60;
             hour++;
-        }while(min>60);
+        }while(min>=60);
     }
 
     if(hour>=24)             //Correcting hours if required
@@ -132,7 +132,7 @@ bool DateTime::datetime_checker()
         do{
             hour = hour - 24;
             day++;
-        }while(hour>24);
+        }while(hour>=24);
     }
 
     check_for_days:         //checking for days in months again if year is increased by the increament of months
@@ -221,6 +221,11 @@ int main()
     cout << "1) Ascending order\n2) Descending order\nEnter the Appropriate number" << endl;
     cin >> req;
 
+    if(req!=1 || req != 2)
+    {
+        cout << "\nYou have enterd inappropriate number";
+        return 0;
+    }
     if(req==1)
     {
         cout << "\nDate and Time on Ascending order : " << endl;

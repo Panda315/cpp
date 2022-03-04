@@ -45,7 +45,7 @@ class Time
 class DateTime : public Date,public Time
 {
     public:
-    void datetime_checker();
+    bool datetime_checker();
 
     DateTime() : Date(),Time() {}
 
@@ -102,8 +102,15 @@ class DateTime : public Date,public Time
     }
 };
 
-void DateTime::datetime_checker()
+bool DateTime::datetime_checker()
 {
+    if(year<1||day<1||month<1||hour<0||min<0||sec<0)        //checking for validity of date and time
+    {
+        return false;
+    }
+
+    else
+    {
     if(sec>=60)             //Correcting seconds if required
     {
         do{
@@ -171,6 +178,8 @@ void DateTime::datetime_checker()
         year++;
         goto check_for_days;
     }
+    return true;
+    }
 }
 
 
@@ -185,8 +194,13 @@ int main()
         cout << "\nFor Data " << i+1 << ":" << endl;
         datetime[i].Date_input();
         datetime[i].Time_input();
-        datetime[i].datetime_checker();
+        if(!datetime[i].datetime_checker())
+        {
+           cout << "\n\n--------------------- You have entered invalid input ---------------------" ;
+           return 0; 
+        }
     }
+
 
     for(int i=0;i<size-1;i++)               //Bubble Sorting
     {

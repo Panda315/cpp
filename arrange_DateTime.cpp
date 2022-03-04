@@ -216,9 +216,28 @@ int main()
         }
     }
 
-    cout << "\nDate and Time on ascending order : " << endl;
-    for(int i=0;i<size;i++)
+    int req;
+    cout << "\n\nDo you want the date and time to be represented based on : " << endl;
+    cout << "1) Ascending order\n2) Descending order\nEnter the Appropriate number" << endl;
+    cin >> req;
+
+    if(req==1)
     {
-        datetime[i].print();
+        cout << "\nDate and Time on Ascending order : " << endl;
+        for(int i=0;i<size;i++)
+        {
+            datetime[i].print();
+        }
     }
+
+    if(req==2)
+    {
+       cout << "\nDate and Time on Descending order : " << endl;
+        for(int i=size-1;i>=0;i--)
+        {
+            datetime[i].print();
+        } 
+    }
+
+    return 0;
 }

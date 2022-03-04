@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+
 using namespace std;
 
 class Date
@@ -8,7 +10,7 @@ class Date
 
     public:
         Date() : year(0),month(0),day(0) {}
-       // Date (int yearO,int monthO,int dayO) : year(yearO),month(monthO),day(dayO) {}
+        Date (int yearO,int monthO,int dayO) : year(yearO),month(monthO),day(dayO) {}
 
         void Date_input()
         {
@@ -28,7 +30,7 @@ class Time
     
     public:
         Time():hour(0),min(0),sec(0) {}
-        // Time(int hourO,int minO,int secO) : hour(hourO),min(minO),sec(secO) {}
+        Time(int hourO,int minO,int secO) : hour(hourO),min(minO),sec(secO) {}
 
         void Time_input()
         {
@@ -45,54 +47,30 @@ class Time
 class DateTime : public Date,public Time
 {
     public:
-    bool datetime_checker();
-
     DateTime() : Date(),Time() {}
+    DateTime(int y,int mo,int d,int hr,int mi,int s) : Date(y,mo,d),Time(hr,mi,s) {}
 
 
-
-    
+    bool datetime_checker();
     bool operator > (DateTime &temp)    //operator overloading 
     {                                   //checking for recent date among two date and time
-       if(year>temp.year)
-            return true;
-        else if(year<temp.year)
-            return false;
-        else 
+        string date1 = to_string(year) + to_string(month) + to_string(day);
+        string time1 = to_string(hour) + to_string(min) + to_string(sec);
+        string date2 = to_string(temp.year) + to_string(temp.month) + to_string(temp.day);
+        string time2 = to_string(temp.hour) + to_string(temp.min) + to_string(temp.sec);
+    
+        if(stoi(date1)>stoi(date2))
         {
-            if(month>temp.month)
-                return true;
-            else if(month<temp.month)
-                return false;
-            else
-            {
-                if(day>temp.day)
-                    return true;
-                else if(day<temp.day)
-                    return false;
-                else
-                {
-                    if(hour>temp.hour)
-                        return true;
-                    else if(hour<temp.hour)
-                        return false;
-                    else
-                    {
-                        if(min>temp.min)
-                            return true;
-                        else if(min<temp.min)
-                            return false;
-                        else
-                        {
-                            if(sec>temp.sec)
-                                return true;
-                            else    
-                                return false;
-                        }
-                    }
-                }
-            }
+            return true;
         }
+
+        else if(stoi(date1)==stoi(date2) && stoi(time1)>stoi(time2))
+        {
+            return true;
+        }
+
+        else 
+            return false;
     } 
 
     void print()
@@ -116,7 +94,7 @@ bool DateTime::datetime_checker()
         do{
             sec=sec-60;
             min++;
-        }while(sec>=60);
+        }while(sec>60);
     }
         
     if(min>=60)             //Correcting minutes if required
@@ -132,7 +110,7 @@ bool DateTime::datetime_checker()
         do{
             hour = hour - 24;
             day++;
-        }while(hour>=24);
+        }while(hour>24);
     }
 
     check_for_days:         //checking for days in months again if year is increased by the increament of months
@@ -221,11 +199,12 @@ int main()
     cout << "1) Ascending order\n2) Descending order\nEnter the Appropriate number" << endl;
     cin >> req;
 
-    if(req!=1 || req != 2)
+    if(req != 1 && req != 2)
     {
         cout << "\nYou have enterd inappropriate number";
         return 0;
-    }
+    } 
+
     if(req==1)
     {
         cout << "\nDate and Time on Ascending order : " << endl;

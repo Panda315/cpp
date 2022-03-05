@@ -1,3 +1,13 @@
+// Write a class for English Date consisting of Year, month and day. 
+// Write another class Time which have data members hour, minute and second. 
+// Derive a class DateTime to hold date and time values. Ask user to input datetime value and display. 
+// Write suitable default and parameterized constructors for each class as required.
+
+// Create an array of DateTime values and sort them in ascending or descending order as per the user request.
+//  Overload '>' operator to compare two DateTime objects.
+
+// Author - Prashant Shrestha
+
 #include <iostream>
 #include <string>
 
@@ -76,7 +86,7 @@ class DateTime : public Date,public Time
     void print()
     {
         cout << "Date : " << year << "/" << month << "/" << day << endl;
-        cout << "Time : " << hour << "/" << min << "/" << sec << endl << endl;
+        cout << "Time : " << hour << ":" << min << ":" << sec << endl << endl;
     }
 };
 
